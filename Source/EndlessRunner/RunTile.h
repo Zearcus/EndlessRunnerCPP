@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "RunTile.generated.h"
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTileEvent);
 
 UCLASS()
 class ENDLESSRUNNER_API ARunTile : public AActor
@@ -15,9 +16,17 @@ public:
 	// Sets default values for this actor's properties
 	ARunTile();
 
+	FTileEvent fTileEvent;
+
+	UFUNCTION()
+	FTransform AttachedTransform();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void PlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USceneComponent* Scene;

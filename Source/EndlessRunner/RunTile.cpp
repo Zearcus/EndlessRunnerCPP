@@ -5,6 +5,7 @@
 #include "Components/SceneComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
+#include "RunCharacter.h"
 
 // Sets default values
 ARunTile::ARunTile()
@@ -13,13 +14,14 @@ ARunTile::ARunTile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Scene = CreateDefaultSubobject<USceneComponent>("Scene");
-	Scene->SetupAttachment(this->GetRootComponent());
+	SetRootComponent(Scene);
 
 	AttachPoint = CreateDefaultSubobject<UArrowComponent>("AttachPoint");
 	AttachPoint->SetupAttachment(Scene);
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
 	BoxCollision->SetupAttachment(Scene);
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ARunTile::PlayerOverlap);
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +29,19 @@ void ARunTile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ARunTile::PlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	
+	if (ARunCharacter* RunCharacter = Cast<ARunCharacter>(OtherActor)) {
+		fTileEvent.Broadcast();
+	}
+}
+
+FTransform ARunTile::AttachedTransform()
+{
+	return AttachPoint->GetComponentTransform();
 }
 
 // Called every frame
