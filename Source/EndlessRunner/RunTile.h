@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "RunTile.generated.h"
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTileEvent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTileExit, class ARunTile*, Tile);//create the exit and return the tile 
 
 UCLASS()
 class ENDLESSRUNNER_API ARunTile : public AActor
@@ -16,7 +16,8 @@ public:
 	// Sets default values for this actor's properties
 	ARunTile();
 
-	FTileEvent fTileEvent;
+	UPROPERTY(BlueprintAssignable)
+		FTileExit fTileExit;
 
 	UFUNCTION()
 	FTransform AttachedTransform();

@@ -15,6 +15,8 @@ class ENDLESSRUNNER_API ARunGameMode : public AGameModeBase
 	GENERATED_BODY()
 	
 public:
+	UFUNCTION()
+	void AddTile(ARunTile* Tile);
 
 protected:
 
@@ -29,8 +31,18 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 		FTransform transform;
 
-	void AddTile();
+	UPROPERTY(VisibleAnywhere)
+		FTimerHandle fTimerHandle;
+
+	UFUNCTION()
+		void Timer();
+	UFUNCTION()
+		void DestroyTile();
+
 
 	UPROPERTY(EditAnywhere)
-	int TileNumber = 3;
+	int TileNumber;
+
+	UPROPERTY(EditAnywhere)
+		float Time;
 };

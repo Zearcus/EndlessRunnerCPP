@@ -33,9 +33,8 @@ void ARunTile::BeginPlay()
 
 void ARunTile::PlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	
 	if (ARunCharacter* RunCharacter = Cast<ARunCharacter>(OtherActor)) {
-		fTileEvent.Broadcast();
+		fTileExit.Broadcast(this);//Send message is Exited
 	}
 }
 
