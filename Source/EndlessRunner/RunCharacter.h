@@ -15,18 +15,24 @@ public:
 	// Sets default values for this character's properties
 	ARunCharacter();
 
+	UPROPERTY(VisibleAnywhere)
+	bool isDead = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class UCameraComponent* Camera;
+	class UCameraComponent* Camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class USpringArmComponent* SpringArm;
+	class USpringArmComponent* SpringArm;
 
+	UFUNCTION()
+	void Die();
 
-public:	
+	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

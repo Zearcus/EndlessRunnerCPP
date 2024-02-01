@@ -4,7 +4,6 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "RunCharacter.h"
-
 // Sets default values
 ARunCharacter::ARunCharacter()
 {
@@ -27,6 +26,11 @@ void ARunCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ARunCharacter::Die()
+{
+	DisableInput(GetWorld()->GetFirstPlayerController());
 }
 
 // Called every frame

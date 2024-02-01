@@ -49,7 +49,7 @@ void ARunTile::SpawnObstacles()
 {
 	if (Array.Num() > 0) {
 		UChildActorComponent* obstacle = NewObject<UChildActorComponent>(this, "Obstacle");
-		obstacle->SetChildActorClass(Array[FMath::RandHelper(Array.Num() - 1)]);//call Random bounding box
+		obstacle->SetChildActorClass(Array[FMath::RandHelper(Array.Num())]);//call Random bounding box
 		obstacle->RegisterComponent();
 		obstacle->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
 		obstacle->SetRelativeLocation(UKismetMathLibrary::RandomPointInBoundingBox(SpawnObstacle->GetRelativeLocation(), SpawnObstacle->GetScaledBoxExtent()));
