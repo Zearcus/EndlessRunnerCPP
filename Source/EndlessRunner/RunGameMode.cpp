@@ -3,7 +3,6 @@
 
 #include "RunGameMode.h"
 #include "RunTile.h"
-#include "TimerManager.h"
 
 void ARunGameMode::BeginPlay()
 {
@@ -25,28 +24,27 @@ void ARunGameMode::BeginPlay()
 	}
 }
 
-void ARunGameMode::Timer()
+void ARunGameMode::DestroyTile(ARunTile* Tile)
 {
-	GetWorldTimerManager().SetTimer(
-		fTimerHandle, // handle to cancel timer at a later time
-		this, // the owning object
-		&ARunGameMode::DestroyTile, // function to call on elapsed
-		Time,
-		false);
-}
-
-void ARunGameMode::DestroyTile()
-{
-	LastArrow->Destroy();
-	UE_LOG(LogTemp, Warning, TEXT("MDR"));
+	Tile->Destroy();
 }
 
 void ARunGameMode::AddTile(ARunTile* Tile)
 {
-	LastArrow = GetWorld()->SpawnActor<ARunTile>(TileClass, transform);
 	//set the new Arrow for spawning the next tile
 	transform = LastArrow->AttachedTransform();
+	LastArrow = GetWorld()->SpawnActor<ARunTile>(TileClass, transform);
 	//call AddTile when message is receive
 	LastArrow->fTileExit.AddDynamic(this, &ARunGameMode::AddTile);
-	Timer();
+
+	FTimerDelegate delegate = FTimerDelegate::CreateUObject(this, &ARunGameMode::DestroyTile, Tile);
+
+	FTimerHandle fTimerHandle;
+
+	GetWorldTimerManager().SetTimer(
+		fTimerHandle, // handle to cancel timer at a later time
+		delegate,
+		// function to call on elapsed
+		Time,
+		false);
 }

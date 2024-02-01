@@ -31,18 +31,13 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 		FTransform transform;
 
-	UPROPERTY(VisibleAnywhere)
-		FTimerHandle fTimerHandle;
-
 	UFUNCTION()
-		void Timer();
-	UFUNCTION()
-		void DestroyTile();
+		void DestroyTile(ARunTile* Tile);
 
 
 	UPROPERTY(EditAnywhere)
-	int TileNumber;
+	int TileNumber = 3;
 
 	UPROPERTY(EditAnywhere)
-		float Time;
+		float Time = 2.0f;
 };
