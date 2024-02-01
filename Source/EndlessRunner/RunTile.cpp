@@ -5,7 +5,9 @@
 #include "Components/SceneComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "RunCharacter.h"
+
 
 // Sets default values
 ARunTile::ARunTile()
@@ -22,6 +24,9 @@ ARunTile::ARunTile()
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
 	BoxCollision->SetupAttachment(Scene);
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ARunTile::PlayerOverlap);
+
+	SpawnObstacle = CreateDefaultSubobject<UBoxComponent>("SpawnObstacle");
+	SpawnObstacle->SetupAttachment(Scene);
 }
 
 // Called when the game starts or when spawned
@@ -29,12 +34,25 @@ void ARunTile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	SpawnObstacles();
 }
 
 void ARunTile::PlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	//Send message if is RunCharacter overlap
 	if (ARunCharacter* RunCharacter = Cast<ARunCharacter>(OtherActor)) {
 		fTileExit.Broadcast(this);//Send message is Exited
+	}
+}
+
+void ARunTile::SpawnObstacles()
+{
+	if (Array.Num() > 0) {
+		UChildActorComponent* obstacle = NewObject<UChildActorComponent>(this, "Obstacle");
+		obstacle->SetChildActorClass(Array[FMath::RandHelper(Array.Num() - 1)]);//call Random bounding box
+		obstacle->RegisterComponent();
+		obstacle->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
+		obstacle->SetRelativeLocation(UKismetMathLibrary::RandomPointInBoundingBox(SpawnObstacle->GetRelativeLocation(), SpawnObstacle->GetScaledBoxExtent()));
 	}
 }
 
