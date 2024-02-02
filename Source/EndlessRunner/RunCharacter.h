@@ -18,7 +18,12 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	bool isDead = false;
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
+
+	UPROPERTY(BlueprintAssignable)
+		FOnDeath onDeath;
 protected:
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -28,7 +33,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArm;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void Die();
 
 	
