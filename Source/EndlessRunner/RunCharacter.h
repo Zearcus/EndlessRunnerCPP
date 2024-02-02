@@ -20,8 +20,11 @@ public:
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
 
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
 		FOnDeath onDeath;
+
+	UFUNCTION(BlueprintCallable)
+	void Die();
 protected:
 
 	// Called when the game starts or when spawned
@@ -33,8 +36,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArm;
 
-	UFUNCTION(BlueprintCallable)
-	void Die();
 
 	
 public:

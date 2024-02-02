@@ -3,6 +3,7 @@
 
 #include "RunGameMode.h"
 #include "RunTile.h"
+#include "RunCharacter.h"
 
 void ARunGameMode::BeginPlay()
 {
@@ -23,6 +24,7 @@ void ARunGameMode::BeginPlay()
 		}
 	}
 }
+
 
 void ARunGameMode::DestroyTile(ARunTile* Tile)
 {

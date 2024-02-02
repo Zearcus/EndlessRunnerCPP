@@ -3,6 +3,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "RunCharacter.h"
 // Sets default values
 ARunCharacter::ARunCharacter()
@@ -32,9 +33,9 @@ void ARunCharacter::Die()
 {
 	if (!isDead) {
 		DisableInput(GetWorld()->GetFirstPlayerController());
+		GetCharacterMovement()->Deactivate();
 		GetMesh()->SetVisibility(false);
 		isDead = true;
-		onDeath.Broadcast();
 	}
 }
 
