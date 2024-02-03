@@ -25,8 +25,11 @@ ARunTile::ARunTile()
 	BoxCollision->SetupAttachment(Scene);
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ARunTile::PlayerOverlap);
 
-	SpawnObstacle = CreateDefaultSubobject<UBoxComponent>("SpawnObstacle");
-	SpawnObstacle->SetupAttachment(Scene);
+	BoxObstacle = CreateDefaultSubobject<UBoxComponent>("SpawnObstacle");
+	BoxObstacle->SetupAttachment(Scene);
+
+	BoxItem = CreateDefaultSubobject<UBoxComponent>("SpawnItem");
+	BoxItem->SetupAttachment(Scene);
 }
 
 // Called when the game starts or when spawned
@@ -35,6 +38,7 @@ void ARunTile::BeginPlay()
 	Super::BeginPlay();
 	
 	SpawnObstacles();
+	SpawnItems();
 }
 
 void ARunTile::PlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -47,12 +51,23 @@ void ARunTile::PlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 
 void ARunTile::SpawnObstacles()
 {
-	if (Array.Num() > 0) {
+	if (ArrayObs.Num() > 0) {
 		UChildActorComponent* obstacle = NewObject<UChildActorComponent>(this, "Obstacle");
-		obstacle->SetChildActorClass(Array[FMath::RandHelper(Array.Num())]);//call Random bounding box
+		obstacle->SetChildActorClass(ArrayObs[FMath::RandHelper(ArrayObs.Num())]);//call Random bounding box
 		obstacle->RegisterComponent();
 		obstacle->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
-		obstacle->SetRelativeLocation(UKismetMathLibrary::RandomPointInBoundingBox(SpawnObstacle->GetRelativeLocation(), SpawnObstacle->GetScaledBoxExtent()));
+		obstacle->SetRelativeLocation(UKismetMathLibrary::RandomPointInBoundingBox(BoxObstacle->GetRelativeLocation(), BoxObstacle->GetScaledBoxExtent()));
+	}
+}
+
+void ARunTile::SpawnItems()
+{
+	if (ArrayItems.Num() > 0) {
+		UChildActorComponent* Item = NewObject<UChildActorComponent>(this, "Items");
+		Item->SetChildActorClass(ArrayItems[FMath::RandHelper(ArrayItems.Num())]);//call Random bounding box
+		Item->RegisterComponent();
+		Item->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+		Item->SetRelativeLocation(UKismetMathLibrary::RandomPointInBoundingBox(BoxItem->GetRelativeLocation(), BoxItem->GetScaledBoxExtent()));
 	}
 }
 

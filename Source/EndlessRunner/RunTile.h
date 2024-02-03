@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "RunObstacle.h"
+#include "RunPickup.h"
 #include "RunTile.generated.h"
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTileExit, class ARunTile*, Tile);//create the exit and return the tile 
 
@@ -31,6 +32,8 @@ protected:
 
 	UFUNCTION()
 		void SpawnObstacles();
+	UFUNCTION()
+		void SpawnItems();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USceneComponent* Scene;
@@ -39,9 +42,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class UBoxComponent* BoxCollision;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class UBoxComponent* SpawnObstacle;
-	UPROPERTY(EditAnywhere, Category= "ObjectClass")
-		TArray<TSubclassOf<ARunObstacle>> Array;
+		class UBoxComponent* BoxObstacle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class UBoxComponent* BoxItem;
+	UPROPERTY(EditAnywhere, Category = "ObjectClass")
+		TArray<TSubclassOf<ARunObstacle>> ArrayObs;
+	UPROPERTY(EditAnywhere, Category = "ObjectClass")
+		TArray<TSubclassOf<ARunPickup>> ArrayItems;
 
 public:
 	// Called every frame

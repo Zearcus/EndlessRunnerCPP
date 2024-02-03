@@ -31,7 +31,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArm;
 
+	UFUNCTION(BlueprintCallable)
+		void AddCoins();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int Coins = 0;
 	
 public:
 	// Called every frame
