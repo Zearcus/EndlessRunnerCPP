@@ -22,7 +22,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class UStaticMeshComponent* StaticMesh;
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 		void OnTrigger();
 public:
 	// Called every frame
