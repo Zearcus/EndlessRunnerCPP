@@ -24,6 +24,7 @@ void ARunGameMode::BeginPlay()
 	}
 }
 
+
 void ARunGameMode::DestroyTile(ARunTile* Tile)
 {
 	Tile->Destroy();

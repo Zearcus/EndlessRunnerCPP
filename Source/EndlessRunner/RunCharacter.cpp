@@ -3,12 +3,12 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "RunCharacter.h"
-
 // Sets default values
 ARunCharacter::ARunCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
@@ -18,15 +18,25 @@ ARunCharacter::ARunCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
 
-	bUseControllerRotationYaw = true;
-	bUseControllerRotationPitch = true;
+	//bUseControllerRotationYaw = true;
+	//bUseControllerRotationPitch = true;
 }
 
 // Called when the game starts or when spawned
 void ARunCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+}
+
+void ARunCharacter::Die()
+{
+	if (!isDead) {
+		DisableInput(GetWorld()->GetFirstPlayerController());
+		GetCharacterMovement()->Deactivate();
+		GetMesh()->SetVisibility(false);
+		isDead = true;
+	}
 }
 
 // Called every frame
