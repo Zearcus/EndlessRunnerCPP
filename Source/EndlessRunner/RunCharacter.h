@@ -18,11 +18,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	bool isDead = false;
 
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
-
-	UPROPERTY(BlueprintCallable, BlueprintAssignable)
-		FOnDeath onDeath;
-
 	UFUNCTION(BlueprintCallable)
 	void Die();
 protected:
