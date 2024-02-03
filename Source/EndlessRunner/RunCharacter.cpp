@@ -18,8 +18,8 @@ ARunCharacter::ARunCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
 
-	bUseControllerRotationYaw = true;
-	bUseControllerRotationPitch = true;
+	//bUseControllerRotationYaw = true;
+	//bUseControllerRotationPitch = true;
 }
 
 // Called when the game starts or when spawned

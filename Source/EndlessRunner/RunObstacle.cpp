@@ -11,7 +11,7 @@ ARunObstacle::ARunObstacle()
 	PrimaryActorTick.bCanEverTick = true;
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("StaticMesh");
-	StaticMesh->SetupAttachment(GetRootComponent());
+	StaticMesh->SetupAttachment(this->GetRootComponent());
 
 }
 
