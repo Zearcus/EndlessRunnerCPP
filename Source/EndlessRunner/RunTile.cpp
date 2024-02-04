@@ -37,8 +37,12 @@ void ARunTile::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	SpawnObstacles();
-	SpawnItems();
+	if (UKismetMathLibrary::RandomBoolWithWeight(0.6f))
+		SpawnObstacles();
+	if(UKismetMathLibrary::RandomBoolWithWeight(0.3f))
+		SpawnItems();
+
+	
 }
 
 void ARunTile::PlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
