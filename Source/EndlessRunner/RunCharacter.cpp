@@ -39,6 +39,11 @@ void ARunCharacter::Die()
 	}
 }
 
+void ARunCharacter::AddCoins()
+{
+	Coins++;
+}
+
 // Called every frame
 void ARunCharacter::Tick(float DeltaTime)
 {

@@ -6,6 +6,7 @@
 
 void ARunGameMode::BeginPlay()
 {
+	Super::BeginPlay();
 	for (int i = 0; i < TileNumber; i++) 
 	{
 		//Spawn first Tile in 0.0.0
